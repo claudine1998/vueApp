@@ -2,21 +2,22 @@
   <div id="app">
     <!-- <img src="./assets/logo.png">
     <router-view/> -->
+    <site-nav :items="nav"></site-nav>
     <b-container fluid>
       <div class="mb-5">
         <b-row class="">
           <b-col
             lg="2"
-            v-for="app in getProducts"
+            v-for="(app, index) in getProducts.slice(0, 10)"
             :key="app.id"
             col
             no-gutters
             class
           >
-            <div>
+            <div :key="index">
               <b-card no-body class="overflow-hidden" style="max-width: 540px;">
                 <div class="">
-                  <b-col md="12">
+                  <b-col md="12" class="px-0">
                     <b-card-img
                       :src="app.thumbnail"
                       alt="Image"
@@ -43,11 +44,17 @@
 
 <script>
 /* eslint-disable */
+import SiteNav from "./components/SiteNav";
 export default {
   name: "App",
+  components: {
+    SiteNav,
+  },
   data() {
     return {
-      getProducts: []
+      nav: ["Home", "Products", "About Us"],
+      getProducts: [],
+      limit: 0
     };
   },
   mounted() {
@@ -59,6 +66,7 @@ export default {
       .then(response => {
         console.log("response", response.data);
         this.getProducts = response.data.products;
+        this.limit = response.data.limit;
       })
       .catch(error => {
         this.errorMessage = error;
