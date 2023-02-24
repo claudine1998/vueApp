@@ -1,16 +1,12 @@
 <template>
   <div class="col-md-12 mx-auto" style="max-width: 87vw;">
     <div class="col">
-      <button class="m-3 btn btn-md btn-danger" @click="removeAllTutorials">
-        Remove User
-      </button>
-
-      <button class=" btn btn-md btn-primary" @click="showAdd">
+      <button class=" btn btn-md btn-primary mb-5" @click="showAdd">
         Create New User
       </button>
       <h4>Tutorials List</h4>
 
-      <div class="row ">
+      <div class="row">
         <div
           class="card mb-2 mr-4"
           style="width: 18rem;"
@@ -44,10 +40,16 @@
         >
           Edit
         </button>
+        <button
+          class="m-3 btn btn-md btn-danger"
+          @click="removeAllTutorials(currentTutorial)"
+        >
+          Remove User
+        </button>
       </div>
       <div v-else>
         <br />
-        <p>Please click on a Tutorial</p>
+        <p>Please click on a Users to Update or Delete</p>
       </div>
     </div>
 
@@ -104,15 +106,13 @@ export default {
       this.currentIndex = index;
     },
 
-    removeAllTutorials() {
+    removeAllTutorials(id) {
       console.log("Check");
 
-      TutorialDataService.delete(1)
+      TutorialDataService.delete(id)
         .then(response => {
-          console.log("this.currentIndex", this.currentIndex);
-          console.log("delete data", response.data);
-          alert("Deleted");
-          this.refreshList();
+          this.tutorials.splice(0, id.id);
+          console.log("ffff", this.tutorials);
         })
         .catch(e => {
           console.log(e);
