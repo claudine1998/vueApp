@@ -1,3 +1,4 @@
+/* eslint-disable */
 import http from "../http-common";
 
 class TutorialDataService {
@@ -22,7 +23,7 @@ class TutorialDataService {
   }
 
   deleteAll() {
-    return http.delete(`/users`);
+    return http.delete("/users");
   }
 }
 

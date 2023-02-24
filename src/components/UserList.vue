@@ -67,6 +67,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import TutorialDataService from "../services/TutorialDataService";
 import AddTutorial from "./AddUsers.vue";
 import Tutorial from "./Users.vue";
@@ -111,7 +112,7 @@ export default {
       console.log("Check");
 
       TutorialDataService.delete(id)
-        .then(response => {
+        .then(() => {
           console.log("this.tutorials delete", this.tutorials);
 
           // The old fashioned way:

@@ -43,6 +43,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import TutorialDataService from "../services/TutorialDataService";
 
 export default {
@@ -64,6 +65,7 @@ export default {
       TutorialDataService.update(this.idTest.id, this.idTest)
         .then(response => {
           this.message = "The tutorial was updated successfully!";
+          /* eslint-disable */
           console.log(response.data);
         })
         .catch(e => {

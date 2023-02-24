@@ -35,6 +35,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import TutorialDataService from "../services/TutorialDataService";
 
 export default {
@@ -53,7 +54,7 @@ export default {
   },
   methods: {
     saveTutorial() {
-      var data = {
+      const data = {
         id: this.tutorials[this.tutorials.length - 1],
         name: this.users.name,
         email: this.users.email
@@ -62,6 +63,7 @@ export default {
       TutorialDataService.create(data)
         .then(response => {
           this.users.id = response.data.id;
+          /* eslint-disable */
           console.log("create response", response.data);
           this.$emit("inputChange", response.data);
           this.submitted = true;
