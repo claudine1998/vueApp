@@ -38,7 +38,10 @@
           <label><strong>Email:</strong></label>
           {{ currentTutorial.email }}
         </div>
-        <button class="btn btn-md bg-warning">
+        <button
+          class="btn btn-md bg-warning"
+          @click="editUser(currentTutorial)"
+        >
           Edit
         </button>
       </div>
@@ -54,15 +57,19 @@
       :tutorials="tutorials"
       v-on:inputChange="saveTutorial"
     />
+
+    <!-- Edit Tutorial -->
+    <tutorial :idTest="idTest" />
   </div>
 </template>
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
 import AddTutorial from "./AddTutorial.vue";
+import Tutorial from "./Tutorial.vue";
 
 export default {
-  components: { AddTutorial },
+  components: { AddTutorial, Tutorial },
   name: "tutorials-list",
   data() {
     return {
@@ -70,7 +77,8 @@ export default {
       currentTutorial: null,
       currentIndex: -1,
       title: "",
-      add: false
+      add: false,
+      idTest: 0
     };
   },
   methods: {
@@ -117,6 +125,10 @@ export default {
     },
     saveTutorial(event) {
       this.tutorials = this.tutorials.concat(event);
+    },
+    editUser(id) {
+      console.log("id test", id);
+      this.idTest = id;
     }
   },
   mounted() {

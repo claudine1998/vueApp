@@ -1,60 +1,44 @@
 <template>
-  <div v-if="currentTutorial" class="edit-form">
-    <h4>Tutorial</h4>
-    <form>
+  <div v-if="idTest" class="submit-form">
+    <div v-if="!submitted">
+      <div class="form-group">
+        <label for="title">ID:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          required
+          v-model="idTest.id"
+          name="name"
+          readonly
+        />
+      </div>
+
       <div class="form-group">
         <label for="title">Title</label>
         <input
           type="text"
-          class="name-control"
-          id="title"
-          v-model="currentTutorial.name"
+          class="form-control"
+          id="name"
+          required
+          v-model="idTest.name"
+          name="name"
         />
       </div>
+
       <div class="form-group">
         <label for="description">Description</label>
         <input
-          type="text"
           class="form-control"
           id="email"
-          v-model="currentTutorial.email"
+          required
+          v-model="idTest.email"
+          name="email"
         />
       </div>
 
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
-      </div>
-    </form>
-
-    <button
-      class="badge badge-primary mr-2"
-      v-if="currentTutorial.published"
-      @click="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      v-else
-      class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
-      Publish
-    </button>
-
-    <button class="badge badge-danger mr-2" @click="deleteTutorial">
-      Delete
-    </button>
-
-    <button type="submit" class="badge badge-success" @click="updateTutorial">
-      Update
-    </button>
-    <p>{{ message }}</p>
-  </div>
-
-  <div v-else>
-    <br />
-    <p>Please click on a Tutorial...</p>
+      <!-- <button @click="updateTutorial" class="btn btn-success">Submit</button> -->
+    </div>
   </div>
 </template>
 
@@ -62,75 +46,36 @@
 import TutorialDataService from "../services/TutorialDataService";
 
 export default {
-  name: "tutorial",
+  name: "tutorials",
+  props: ["idTest"],
   data() {
     return {
-      currentTutorial: null,
-      message: ""
+      users: {
+        id: null,
+        name: "",
+        email: "",
+        published: false
+      },
+      submitted: false
     };
   },
   methods: {
-    getTutorial(id) {
-      TutorialDataService.get(id)
-        .then(response => {
-          this.currentTutorial = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    updatePublished(status) {
-      var data = {
-        id: this.currentTutorial.id,
-        name: this.currentTutorial.name,
-        email: this.currentTutorial.email,
-        published: status
-      };
-
-      TutorialDataService.update(this.currentTutorial.id, data)
-        .then(response => {
-          this.currentTutorial.published = status;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
     updateTutorial() {
-      TutorialDataService.update(this.currentTutorial.id, this.currentTutorial)
+      TutorialDataService.update(this.idTest.id, this.idTest)
         .then(response => {
-          console.log(response.data);
           this.message = "The tutorial was updated successfully!";
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    deleteTutorial() {
-      TutorialDataService.delete(this.currentTutorial.id)
-        .then(response => {
           console.log(response.data);
-          this.$router.push({ name: "tutorials" });
         })
         .catch(e => {
           console.log(e);
         });
     }
-  },
-  mounted() {
-    console.log("running edit");
-    this.message = "";
-    this.getTutorial(this.$route.params.id);
   }
 };
 </script>
 
 <style>
-.edit-form {
+.submit-form {
   max-width: 300px;
   margin: auto;
 }
