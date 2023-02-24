@@ -57,6 +57,7 @@
     <add-tutorial
       :add="add"
       :tutorials="tutorials"
+      :idTest="idTest"
       v-on:inputChange="saveTutorial"
     />
 
@@ -111,7 +112,15 @@ export default {
 
       TutorialDataService.delete(id)
         .then(response => {
-          this.tutorials.splice(0, id.id);
+          console.log("this.tutorials delete", this.tutorials);
+
+          // The old fashioned way:
+          const indexToRemove = this.tutorials.findIndex(pl => pl.id === id.id);
+          this.tutorials.splice(indexToRemove, 1);
+
+          // this.tutorials.splice(index, id.id);
+
+          // this.tutorials.splice(0, id.id);
           console.log("ffff", this.tutorials);
         })
         .catch(e => {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="add" class="submit-form">
+  <div v-if="add && !idTest" class="submit-form">
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -27,10 +27,10 @@
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
 
-    <div v-else>
+    <!-- <div v-else>
       <h4>You submitted successfully!</h4>
       <button class="btn btn-success" @click="newTutorial">Add</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -39,7 +39,7 @@ import TutorialDataService from "../services/TutorialDataService";
 
 export default {
   name: "add-tutorial",
-  props: ["add", "tutorials"],
+  props: ["add", "tutorials", "idTest"],
   data() {
     return {
       users: {
@@ -54,6 +54,7 @@ export default {
   methods: {
     saveTutorial() {
       var data = {
+        id: this.tutorials[this.tutorials.length - 1],
         name: this.users.name,
         email: this.users.email
       };
