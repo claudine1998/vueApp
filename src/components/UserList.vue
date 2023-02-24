@@ -67,8 +67,8 @@
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
-import AddTutorial from "./AddTutorial.vue";
-import Tutorial from "./Tutorial.vue";
+import AddTutorial from "./AddUsers.vue";
+import Tutorial from "./Users.vue";
 
 export default {
   components: { AddTutorial, Tutorial },

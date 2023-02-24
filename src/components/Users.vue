@@ -1,6 +1,6 @@
 <template>
   <div v-if="idTest" class="submit-form">
-    <div v-if="!submitted">
+    <div>
       <div class="form-group">
         <label for="title">ID:</label>
         <input
