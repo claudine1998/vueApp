@@ -1,89 +1,25 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png">
-    <router-view/> -->
-    <site-nav :items="nav"></site-nav>
-    <b-container fluid>
-      <div class="mb-5">
-        <b-row class="">
-          <b-col
-            lg="2"
-            v-for="(app, index) in getProducts.slice(0, 10)"
-            :key="app.id"
-            col
-            no-gutters
-            class
-          >
-            <div :key="index">
-              <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-                <div class="">
-                  <b-col md="12" class="px-0">
-                    <b-card-img
-                      :src="app.thumbnail"
-                      alt="Image"
-                      class="rounded-0 cover"
-                      style="height:200px"
-                    ></b-card-img>
-                  </b-col>
-                  <b-col md="12">
-                    <b-card-body>
-                      <b-card-text>
-                        {{ app.title }}
-                      </b-card-text>
-                    </b-card-body>
-                  </b-col>
-                </div>
-              </b-card>
-            </div>
-          </b-col>
-        </b-row>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <router-link to="/" class="navbar-brand">bezKoder</router-link>
+      <div class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link to="/tutorials" class="nav-link">Tutorials</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/add" class="nav-link">Add</router-link>
+        </li>
       </div>
-    </b-container>
+    </nav>
+
+    <div class="container mt-3">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import SiteNav from "./components/SiteNav";
 export default {
-  name: "App",
-  components: {
-    SiteNav,
-  },
-  data() {
-    return {
-      nav: ["Home", "Products", "About Us"],
-      getProducts: [],
-      limit: 0
-    };
-  },
-  mounted() {
-    console.log("app running");
-
-    // call this in a differ file
-    this.$http
-      .get("/products")
-      .then(response => {
-        console.log("response", response.data);
-        this.getProducts = response.data.products;
-        this.limit = response.data.limit;
-      })
-      .catch(error => {
-        this.errorMessage = error;
-        console.error("There was an error!", error);
-      });
-    // end
-  }
+  name: "App"
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
