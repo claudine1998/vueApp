@@ -1,22 +1,32 @@
 <template>
-  <div class="list row">
-    <div class="col-md-6">
+  <div class="col-md-12 mx-auto" style="max-width: 87vw;">
+    <div class="col">
+      <button class="m-3 btn btn-md btn-danger" @click="removeAllTutorials">
+        Remove User
+      </button>
+
+      <button class=" btn btn-md btn-primary" @click="showAdd">
+        Create New User
+      </button>
       <h4>Tutorials List</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
+
+      <div class="row ">
+        <div
+          class="card mb-2 mr-4"
+          style="width: 18rem;"
           :class="{ active: index == currentIndex }"
           v-for="(tutorial, index) in tutorials"
           :key="index"
           @click="setActiveTutorial(tutorial, index)"
         >
-          {{ tutorial.id }} {{ tutorial.name }}
-        </li>
-      </ul>
-
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
-        Remove
-      </button>
+          <!-- <img src="..." class="card-img-top" alt="..." /> -->
+          <div class="card-body">
+            <p class="card-text">
+              {{ tutorial.name }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
       <div v-if="currentTutorial">
@@ -28,32 +38,39 @@
           <label><strong>Email:</strong></label>
           {{ currentTutorial.email }}
         </div>
-        <a
-          class="badge badge-warning"
-          :href="'/tutorials/' + currentTutorial.name"
-        >
+        <button class="btn btn-md bg-warning">
           Edit
-        </a>
+        </button>
       </div>
       <div v-else>
         <br />
-        <p>Please click on a Tutorial...</p>
+        <p>Please click on a Tutorial</p>
       </div>
     </div>
+
+    <!-- Adding Tutorial -->
+    <add-tutorial
+      :add="add"
+      :tutorials="tutorials"
+      v-on:inputChange="saveTutorial"
+    />
   </div>
 </template>
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
+import AddTutorial from "./AddTutorial.vue";
 
 export default {
+  components: { AddTutorial },
   name: "tutorials-list",
   data() {
     return {
       tutorials: [],
       currentTutorial: null,
       currentIndex: -1,
-      title: ""
+      title: "",
+      add: false
     };
   },
   methods: {
@@ -81,6 +98,7 @@ export default {
 
     removeAllTutorials() {
       console.log("Check");
+
       TutorialDataService.delete(1)
         .then(response => {
           console.log("this.currentIndex", this.currentIndex);
@@ -91,6 +109,14 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    showAdd() {
+      console.log("showaddclick");
+      this.add = true;
+      console.log(this.showAdd);
+    },
+    saveTutorial(event) {
+      this.tutorials = this.tutorials.concat(event);
     }
   },
   mounted() {

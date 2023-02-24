@@ -1,5 +1,5 @@
 <template>
-  <div class="submit-form">
+  <div v-if="add" class="submit-form">
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -39,6 +39,7 @@ import TutorialDataService from "../services/TutorialDataService";
 
 export default {
   name: "add-tutorial",
+  props: ["add", "tutorials"],
   data() {
     return {
       users: {
@@ -61,6 +62,7 @@ export default {
         .then(response => {
           this.users.id = response.data.id;
           console.log("create response", response.data);
+          this.$emit("inputChange", response.data);
           this.submitted = true;
         })
         .catch(e => {

@@ -8,14 +8,11 @@ import router from "./router";
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-import api from "./plugins/axios";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.config.productionTip = false;
-Vue.prototype.$http = api;
-api.defaults.timeout = 10000;
 
 /* eslint-disable no-new */
 new Vue({

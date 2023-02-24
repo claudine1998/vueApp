@@ -122,6 +122,7 @@ export default {
     }
   },
   mounted() {
+    console.log("running edit");
     this.message = "";
     this.getTutorial(this.$route.params.id);
   }

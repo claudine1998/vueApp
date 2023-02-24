@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: "/tutorials/:id",
-      name: "tutorial-details",
+      name: "tutorial",
       component: () => import("../components/Tutorial")
     },
     {
